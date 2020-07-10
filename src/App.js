@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react"
+import "./App.css"
+import axios from "axios"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [image, setImage] = useState("")
+
+	useEffect(() => {
+		axios
+			.get(
+				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg`
+			)
+			.then((res) => {
+				console.log(res.data.url)
+				setImage(res.data.url)
+			})
+	}, [])
+
+	return (
+		<div>
+			<div className="datepicker">
+				<h3>Choose date:</h3>
+				<input type="date" id="start" name="trip-start"></input>
+			</div>
+			<div>
+				<img className="image" src={image} />
+			</div>
+		</div>
+	)
 }
 
-export default App;
+export default App
