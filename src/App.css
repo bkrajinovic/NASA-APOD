@@ -1,4 +1,4 @@
-.datepicker {
+.datePicker, .currDate{
 	text-align: center;
 }
 
@@ -10,3 +10,8 @@
 	margin-right: auto;
 	margin-top: 5%;
 }
+
+.button{
+	margin-left: 10px;
+}
+
