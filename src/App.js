@@ -11,7 +11,7 @@ function App() {
 	useEffect(() => {
 		axios
 			.get(
-				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg`
+				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg&date=${input.date}`
 			)
 			.then((res) => {
 				console.log(res)
@@ -23,11 +23,20 @@ function App() {
 	let dd = String(today.getDate()).padStart(2, "0")
 	let mm = String(today.getMonth() + 1).padStart(2, "0")
 	let yyyy = today.getFullYear()
-	today = dd + "-" + mm + "-" + yyyy
+	today = yyyy + "-" + mm + "-" + dd
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(input)
+		console.log(input.date)
+		axios
+			.get(
+				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg&date=${input.date}`
+			)
+			.then((res) => {
+				console.log(res)
+				setImage(res.data.url)
+				document.getElementsByClassName("image").src = input.image
+			})
 	}
 
 	return (
