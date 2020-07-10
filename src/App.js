@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import "./App.css"
 import axios from "axios"
+import Button from "react-bootstrap/Button"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 function App() {
 	const [image, setImage] = useState("")
@@ -11,7 +13,7 @@ function App() {
 	useEffect(() => {
 		axios
 			.get(
-				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg&date=${input.date}`
+				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg`
 			)
 			.then((res) => {
 				console.log(res)
@@ -41,9 +43,9 @@ function App() {
 
 	return (
 		<div>
-			<h3 className="currDate">Today is: {today}</h3>
+			<h4 className="currDate">Today is: {today}</h4>
 			<div className="datePicker">
-				<h3>Choose date:</h3>
+				<h5>Choose date:</h5>
 				<input
 					type="date"
 					id="date"
@@ -51,9 +53,9 @@ function App() {
 					value={input.date}
 					onChange={(e) => setInput({ ...input, date: e.target.value })}
 				></input>
-				<button className="button" onClick={handleSubmit}>
+				<Button className="button" onClick={handleSubmit}>
 					Submit
-				</button>
+				</Button>
 			</div>
 			<div>
 				<img className="image" src={image} alt="apod" />
