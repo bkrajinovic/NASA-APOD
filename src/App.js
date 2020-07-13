@@ -10,6 +10,8 @@ function App() {
 		date: "",
 	})
 
+	//Fetch Today's image
+
 	useEffect(() => {
 		axios
 			.get(
@@ -21,29 +23,43 @@ function App() {
 			})
 	}, [])
 
+	//Generate Today's date
+
 	let today = new Date()
 	let dd = String(today.getDate()).padStart(2, "0")
 	let mm = String(today.getMonth() + 1).padStart(2, "0")
 	let yyyy = today.getFullYear()
 	today = yyyy + "-" + mm + "-" + dd
 
+	//Get image for selected date
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(input.date)
-		axios
-			.get(
-				`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg&date=${input.date}`
-			)
-			.then((res) => {
-				console.log(res)
-				setImage(res.data.url)
-				document.getElementsByClassName("image").src = input.image
-			})
+
+		// Check for local storage
+
+		if (localStorage.getItem(input.date) === null) {
+			axios
+				.get(
+					`https://api.nasa.gov/planetary/apod?api_key=PvJR60vcNkMYler2kwiKhzQnBjoqdhaQFpRLmGKg&date=${input.date}`
+				)
+				.then((res) => {
+					console.log(res.data)
+					setImage(res.data)
+					document.getElementsByClassName("image").src = image.url
+					localStorage.setItem(image.date, image.url)
+				})
+		} else {
+			let key = input.date
+			let LS = localStorage.getItem(key)
+			console.log(LS)
+			document.getElementById("img").src = LS
+		}
 	}
 
 	return (
-		<div>
-			<h4 className="currDate">Today is: {today}</h4>
+		<div className="app">
+			<h4 className="currDate">Today's date: {today}</h4>
 			<div className="datePicker">
 				<h5>Choose date:</h5>
 				<input
@@ -58,7 +74,7 @@ function App() {
 				</Button>
 			</div>
 			<div>
-				<img className="image" src={image} alt="apod" />
+				<img className="image" id="img" src={image.url} alt="apod" />
 			</div>
 		</div>
 	)
