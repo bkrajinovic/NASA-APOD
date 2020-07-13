@@ -50,10 +50,7 @@ function App() {
 					localStorage.setItem(image.date, image.url)
 				})
 		} else {
-			let key = input.date
-			let LS = localStorage.getItem(key)
-			console.log(LS)
-			document.getElementById("img").src = LS
+			document.getElementById("img").src = localStorage.getItem(input.date)
 		}
 	}
 
